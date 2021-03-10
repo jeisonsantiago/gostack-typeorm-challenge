@@ -18,7 +18,7 @@ class Product {
   @Column('varchar')
   name: string;
 
-  @Column('double')
+  @Column('double precision')
   price: number;
 
   @Column('integer')

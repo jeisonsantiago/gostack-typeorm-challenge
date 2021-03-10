@@ -23,10 +23,22 @@ class CreateOrderService {
     private ordersRepository: IOrdersRepository,
     private productsRepository: IProductsRepository,
     private customersRepository: ICustomersRepository,
-  ) {}
+  ) { }
 
   public async execute({ customer_id, products }: IRequest): Promise<Order> {
     // TODO
+
+    // find customer ID
+    const customer = this.customersRepository.findById(customer_id);
+    if (!customer) {
+      throw new AppError('Customer not found');
+    }
+
+    // check products availability
+
+
+
+    // check all products existence and quantity
   }
 }
 

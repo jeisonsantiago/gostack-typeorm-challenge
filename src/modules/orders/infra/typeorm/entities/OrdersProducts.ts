@@ -6,11 +6,12 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToOne,
+  JoinTable,
 } from 'typeorm';
 
 import Order from '@modules/orders/infra/typeorm/entities/Order';
 import Product from '@modules/products/infra/typeorm/entities/Product';
-import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 
 @Entity('orders_products')
 class OrdersProducts {
@@ -18,22 +19,30 @@ class OrdersProducts {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // @ManyToOne(()=>Order, order=>order.customer)
+  @ManyToOne(()=>Order, order=>order.order_products)
+  @JoinColumn({name:'order_id'})
   order: Order;
 
-  // @ManyToOne(()=>Product, product=>product.)
+  @ManyToOne(()=>Product,product=>product.order_products)
+  @JoinColumn({name:'product_id'})
   product: Product;
 
+  @Column()
   product_id: string;
 
+  @Column()
   order_id: string;
 
+  @Column('decimal')
   price: number;
 
+  @Column('int')
   quantity: number;
 
+  @CreateDateColumn()
   created_at: Date;
 
+  @UpdateDateColumn()
   updated_at: Date;
 }
 

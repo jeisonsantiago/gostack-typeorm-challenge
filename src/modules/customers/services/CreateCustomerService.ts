@@ -17,7 +17,7 @@ class CreateCustomerService {
     private customersRepository: ICustomersRepository) { }
 
   public async execute({ name, email }: IRequest): Promise<Customer> {
-    // TODO
+
     const emailExistis = await this.customersRepository.findByEmail(email);
 
     if(emailExistis){

@@ -7,19 +7,24 @@ import CreateCustomerService from '@modules/customers/services/CreateCustomerSer
 export default class ProductsController {
   public async create(request: Request, response: Response): Promise<Response> {
 
-    const {name, price, quantity} = request.body;
+    try {
+      const { name, price, quantity } = request.body;
 
-    // get the singleton intance
-    const createProductService = container.resolve(CreateProductService);
+      // get the singleton intance
+      const createProductService = container.resolve(CreateProductService);
 
-    const product = createProductService.execute({
-      name,
-      price,
-      quantity,
-    });
+      const product = await createProductService.execute({
+        name,
+        price,
+        quantity,
+      });
 
-    return response.json({
-      product
-    });
+      return response.json(product);
+    } catch (error) {
+      return response
+        .status(400)
+        .json({ error: error.message });
+    }
+
   }
 }
